@@ -34,10 +34,10 @@
       </div>
     </div>
 
-    <div class="pt-4">
-      <%= turbo_frame_tag "messages" do %>
-        <%= render @messages %>
-      <% end %>
+    <%= turbo_stream_from "messages" %>
+
+    <div class="pt-4" id="messages">
+      <%= render @messages %>
     </div>
 
     <div class="py-8">

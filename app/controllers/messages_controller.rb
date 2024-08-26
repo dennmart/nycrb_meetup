@@ -10,7 +10,7 @@ class MessagesController < ApplicationController
 
     if @message.save
       respond_to do |format|
-        format.turbo_stream { render turbo_stream: turbo_stream.prepend("messages", partial: "messages/message", locals: { message: @message }), status: :created }
+        format.turbo_stream { @message.broadcast_prepend_to "messages" }
         format.html { redirect_to root_path }
       end
     else

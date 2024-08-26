@@ -44,9 +44,10 @@ RSpec.describe "Messages", type: :request do
         expect(message.content).to eq("Hello, World!")
       end
 
-      it "returns a 201 Created response for Turbo Stream" do
-        post messages_path, params: { message: { uuid: uuid, content: "Hello, World!" } }, as: :turbo_stream
-        expect(response).to have_http_status(:created)
+      it "sends a broadcast to messages with Turbo Stream" do
+        expect {
+          post messages_path, params: { message: { uuid: uuid, content: "Hello, World!" } }, as: :turbo_stream
+        }.to have_broadcasted_to("messages")
       end
 
       it "redirects to the root path when not Turbo Stream" do

@@ -7,6 +7,11 @@ export default class extends Controller {
   connect() {
     this.contentFieldTarget.focus();
     this.submitButtonTarget.disabled = true;
+
+    document.addEventListener(
+      "turbo:before-stream-render",
+      this._pruneMessages.bind(this)
+    );
   }
 
   checkContent(event) {
@@ -22,10 +27,13 @@ export default class extends Controller {
       this.contentFieldTarget.value = "";
       this.contentFieldTarget.focus();
       this.submitButtonTarget.disabled = true;
+    }
+  }
 
-      if (this.messageTargets.length >= 10) {
-        this.messageTargets[this.messageTargets.length - 1].remove();
-      }
+  _pruneMessages(event) {
+    console.log("pruning", event);
+    if (this.messageTargets.length >= 10) {
+      this.messageTargets[this.messageTargets.length - 1].remove();
     }
   }
 }
