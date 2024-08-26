@@ -10,20 +10,38 @@
 <div>
   <%= turbo_frame_tag "message_form" do %>
     <div class="px-6 lg:px-8 sm:pb-8 mx-auto max-w-2xl">
-      <%= form_with data: { turbo_frame: "messages" } do |form| %>
+      <%= form_with model: Message.new, data: { turbo_frame: "messages" } do |form| %>
+        <%= form.hidden_field :uuid, value: session[:uuid] %>
+
         <div class="mt-2">
-          <textarea rows="4" name="comment" id="comment" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-red-600 sm:text-sm sm:leading-6"></textarea>
+          <%= form.text_area :content, rows: 4, class: "block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-red-600 sm:text-sm sm:leading-6", placeholder: "Leave a message..." %>
         </div>
 
         <div class="pt-4">
-          <button type="submit" class="flex w-full justify-center rounded-md bg-red-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-red-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600">Sign in</button>
+          <%= form.submit "Post your message", class: "flex w-full justify-center rounded-md bg-red-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-red-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600" %>
         </div>
       <% end %>
     </div>
   <% end %>
 
-  <div class="px-6 lg:px-8 mx-auto max-w-2xl">
-    <%= turbo_frame_tag "messages" do %>
-    <% end %>
+  <div class="px-6 lg:px-8 pt-8 mx-auto max-w-2xl">
+    <div class="relative">
+      <div class="absolute inset-0 flex items-center" aria-hidden="true">
+        <div class="w-full border-t border-gray-300"></div>
+      </div>
+      <div class="relative flex justify-center">
+        <span class="bg-white px-3 text-base font-semibold leading-6 text-gray-900">Messages</span>
+      </div>
+    </div>
+
+    <div class="pt-4">
+      <%= turbo_frame_tag "messages" do %>
+        <%= render @messages %>
+      <% end %>
+    </div>
+
+    <div class="pt-4">
+      <%= link_to "View all messages", all_messages_path, class: "flex w-full justify-center rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50" %>
+    </div>
   </div>
 </div>
