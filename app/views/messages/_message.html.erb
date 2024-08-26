@@ -3,7 +3,7 @@
     <div class="flex justify-between gap-x-4">
       <div class="flex items-center">
         <%= image_tag "https://robohash.org/#{message.uuid}.png", class: "inline-block h-8 w-8 rounded-full border mr-2" %>
-        <div class="py-0.5 text-xs leading-5 text-gray-500"><span class="font-medium text-gray-900"><%= message.uuid %></span> commented</div>
+        <div class="py-0.5 text-xs leading-5 text-gray-500"><span class="font-medium text-gray-900"><%= generated_name(message.uuid) %></span> commented</div>
       </div>
       <time datetime="<%= message.created_at.iso8601 %>" class="flex-none py-0.5 text-xs leading-5 text-gray-500"><%= time_ago_in_words(message.created_at) %></time>
     </div>
