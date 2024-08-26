@@ -7,18 +7,18 @@
   </div>
 </div>
 
-<div>
+<div data-controller="messages">
   <%= turbo_frame_tag "message_form" do %>
     <div class="px-6 lg:px-8 sm:pb-8 mx-auto max-w-2xl">
-      <%= form_with model: Message.new, data: { turbo_frame: "messages" } do |form| %>
+      <%= form_with model: Message.new, data: { turbo_frame: "messages", action: "turbo:submit-end->messages#submit" } do |form| %>
         <%= form.hidden_field :uuid, value: session[:uuid] %>
 
         <div class="mt-2">
-          <%= form.text_area :content, rows: 4, class: "block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-red-600 sm:text-sm sm:leading-6", placeholder: "Leave a message..." %>
+          <%= form.text_area :content, rows: 4, class: "block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-red-600 sm:text-sm sm:leading-6", placeholder: "Leave a message...", data: { "messages-target": "contentField", action: "input->messages#checkContent" } %>
         </div>
 
         <div class="pt-4">
-          <%= form.submit "Post your message", class: "flex w-full justify-center rounded-md bg-red-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-red-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600" %>
+          <%= form.submit "Post your message", class: "flex w-full justify-center rounded-md bg-red-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-red-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600 disabled:bg-red-300", disabled: true, data: { "messages-target": "submitButton" } %>
         </div>
       <% end %>
     </div>
