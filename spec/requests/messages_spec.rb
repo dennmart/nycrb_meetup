@@ -2,6 +2,23 @@ require 'rails_helper'
 
 RSpec.describe "Messages", type: :request do
   describe "GET /" do
+    it "sets a UUID in the session if it doesn't exist" do
+      allow(SecureRandom).to receive(:uuid).and_return("1234")
+
+      get root_path
+      expect(session[:uuid]).to eq("1234")
+    end
+
+    it "does not modify the session UUID if it already exists" do
+      allow(SecureRandom).to receive(:uuid).and_return("1234")
+      get root_path
+      expect(session[:uuid]).to eq("1234")
+
+      allow(SecureRandom).to receive(:uuid).and_return("5678")
+      get root_path
+      expect(session[:uuid]).to eq("1234")
+    end
+
     it "fetches the last 10 messages in descending order of created_at" do
       # TODO: Write a better spec for this.
       messages_double = double("ActiveRecord::Relation")
