@@ -52,7 +52,7 @@ Visit `http://localhost:3000` in your browser to view the app.
 
 2. **Configure Kamal:**
 
-   Adjust the `config/deploy  .yml` file with your server and application settings.
+   Adjust the `config/deploy.yml` file with your server and application settings. Also, copy the `.env.example` file to `.env` and modify the existing values for your deployments.
 
 3. **Perform the initial setup for the app on your servers:**
 

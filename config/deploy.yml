@@ -1,0 +1,80 @@
+# Name of your application. Used to uniquely configure containers.
+service: nycrb-meetup
+
+# Name of the container image.
+#
+# Replace the image name to your own, according to your container registry.
+image: dennmart/nycrb-meetup
+
+# Deploy your app to these servers.
+#
+# Replace the IP address with your server's IP address(es).
+servers:
+  web:
+    hosts:
+      - 192.168.0.1
+
+# Credentials for your image host.
+#
+# Replace the container registry details as needed.
+registry:
+  server: ghcr.io
+  username: dennmart
+  password:
+    - KAMAL_REGISTRY_PASSWORD
+
+
+# Inject ENV variables into containers (secrets come from .env).
+#
+# Remember to run `kamal env push` after making changes!
+env:
+  clear:
+    RAILS_ENV: production
+    RACK_ENV: production
+    RAILS_LOG_TO_STDOUT: true
+    RAILS_SERVE_STATIC_FILES: true
+  # Set the correct environment variables in .env (check
+  # the .env.example file for a list of required variables).
+  secret:
+    - RAILS_MASTER_KEY
+    - DATABASE_URL
+    - REDIS_URL
+
+# Configure builder setup.
+#
+# If working on an ARM64 machine, specify the correct
+# architecture for the local builder, or run your builds
+# remotely. Read the documentation for more details:
+# https://kamal-deploy.org/docs/configuration/builders/
+builder:
+  multiarch: false
+
+# Use accessory services (secrets come from .env).
+#
+# Replace the IP address with your server's IP address.
+accessories:
+  db:
+    image: postgres:16.4
+    host: 192.168.0.1
+    # The following port configuration uses a private network.
+    # You can only specify the port (port:5432) if you have
+    # secured the server with a firewall or other security measures.
+    # Otherwise, only specify the port to use.
+    port: 10.0.1.1:5432:5432
+    env:
+      secret:
+        - POSTGRES_DB
+        - POSTGRES_USER
+        - POSTGRES_PASSWORD
+    directories:
+      - data:/var/lib/postgresql/data
+  redis:
+    image: redis:7.4
+    host: 192.168.0.1
+    # The following port configuration uses a private network.
+    # You can only specify the port (port:6379) if you have
+    # secured the server with a firewall or other security measures.
+    # Otherwise, only specify the port to use.
+    port: 10.0.1.1:6379:6379
+    directories:
+      - data:/data
