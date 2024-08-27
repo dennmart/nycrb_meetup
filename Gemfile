@@ -11,6 +11,7 @@ gem "cssbundling-rails"
 gem "redis", ">= 4.0.1"
 gem "kredis"
 gem "bootsnap", require: false
+gem "pagy", "~> 9.0"
 
 group :development, :test do
   gem "debug", platforms: %i[ mri windows ], require: "debug/prelude"
