@@ -1,5 +1,6 @@
 class MessagesController < ApplicationController
   before_action :set_uuid
+  include Pagy::Backend
 
   def index
     @messages = Message.order(created_at: :desc).limit(10)
@@ -19,6 +20,7 @@ class MessagesController < ApplicationController
   end
 
   def all
+    @pagy, @messages = pagy(Message.order(created_at: :desc), limit: 10)
   end
 
   private

@@ -3,6 +3,7 @@ require 'rails_helper'
 RSpec.describe "Messages", type: :request do
   describe "GET /" do
     it "fetches the last 10 messages in descending order of created_at" do
+      # TODO: Write a better spec for this.
       messages_double = double("ActiveRecord::Relation")
       message = Message.create!(uuid: SecureRandom.uuid, content: "Hello, World!")
 
@@ -55,6 +56,14 @@ RSpec.describe "Messages", type: :request do
         expect(response).to be_redirect
         expect(response).to redirect_to(root_path)
       end
+    end
+  end
+
+  describe "GET /all" do
+    # TODO: Write a better specs for this.
+    it "returns a successful response" do
+      get all_messages_path
+      expect(response).to have_http_status(:success)
     end
   end
 end

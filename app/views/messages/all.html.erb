@@ -1,0 +1,28 @@
+<div class="bg-white px-6 py-20 sm:py-24 lg:px-8">
+  <div class="mx-auto max-w-2xl text-center">
+    <h2 class="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl">Hi, NYC.rb! 👋</h2>
+  </div>
+</div>
+
+<div class="px-6 lg:px-8 pt-8 mx-auto max-w-2xl">
+  <div class="relative">
+    <div class="absolute inset-0 flex items-center" aria-hidden="true">
+      <div class="w-full border-t border-gray-300"></div>
+    </div>
+    <div class="relative flex justify-center">
+      <span class="bg-white px-3 text-base font-semibold leading-6 text-gray-900">Messages</span>
+    </div>
+  </div>
+
+  <div class="pt-4">
+    <%= render @messages %>
+  </div>
+
+  <div class="pt-4">
+    <%== pagy_nav(@pagy) %>
+  </div>
+
+  <div class="py-8">
+    <%= link_to "Back to home", root_path, class: "flex w-full justify-center rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50" %>
+  </div>
+</div>
